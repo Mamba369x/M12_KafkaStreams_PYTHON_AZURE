@@ -1,0 +1,7 @@
+.terraform
+.terraform.*
+terraform.*
+env.sh
+__pycache__
+.pytest_cache
+.DS_Store
