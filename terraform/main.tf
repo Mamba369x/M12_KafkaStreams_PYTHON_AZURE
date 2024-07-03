@@ -47,9 +47,14 @@ resource "azurerm_storage_container" "bdcc" {
   }
 }
 
+locals {
+  all_files      = fileset(path.module, "../m12kafkastreams/topics/expedia/**")
+  filtered_files = [for file in local.all_files : file if !contains(file, ".DS_Store")]
+}
+
 resource "azurerm_storage_blob" "bdcc" {
-  for_each               = fileset(path.module, "../m12kafkastreams/topics/expedia/**")
-  name                   = "${replace(each.key, "../m12kafkastreams/", "")}"
+  for_each               = toset(local.filtered_files)
+  name                   = replace(each.key, "../m12kafkastreams/", "")
   storage_account_name   = azurerm_storage_account.bdcc.name
   storage_container_name = azurerm_storage_container.bdcc.name
   type                   = "Block"

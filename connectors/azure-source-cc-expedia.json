@@ -2,7 +2,7 @@
   "name": "expedia",
   "config": {
     "azblob.account.name": "stsqlpolandcentral",
-    "azblob.account.key": "",
+    "azblob.account.key": "<your_storage_account_key>",
     "azblob.container.name": "datasqlpolandcentral",
     "format.class": "io.confluent.connect.azure.blob.storage.format.avro.AvroFormat",
     "connector.class": "io.confluent.connect.azure.blob.storage.AzureBlobStorageSourceConnector",

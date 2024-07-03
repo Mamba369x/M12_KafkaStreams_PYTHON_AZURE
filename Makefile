@@ -42,9 +42,11 @@ start:
 build:
 	cd terraform && \
 	source env.sh && \
-	cd ../connectors && \
 	az login --service-principal --username $$TF_VAR_CLIENT_ID --password $$TF_VAR_CLIENT_SECRET --tenant $$TF_VAR_TENANT_ID && \
+	cd ../connectors && \
 	az acr build --registry $$ACR_NAME --image azure-connector:latest -f Dockerfile . && \
+	cd ../stream && \
+	az acr build --registry $$ACR_NAME --image kstream-app:1.0 -f Dockerfile . && \
 	az aks update --name $$KUBERNETES_CLUSTER_NAME --resource-group $$RESOURCE_GROUP_NAME --attach-acr $$ACR_NAME
 
 conf:
@@ -59,11 +61,11 @@ conf:
 	helm repo update && \
 	helm upgrade --install confluent-operator confluentinc/confluent-for-kubernetes && \
 	kubectl apply -f confluent-platform.yaml && \
-    kubectl apply -f producer-app-data.yaml && \
-	kubectl create -f kstream-app.yaml
+    kubectl apply -f producer-app-data.yaml
 
 run:
 	kubectl get pods -o wide  && \
+	kubectl create -f kstream-app.yaml && \
     kubectl port-forward controlcenter-0 9021:9021
 
 destroy:
