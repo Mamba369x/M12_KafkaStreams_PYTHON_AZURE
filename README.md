@@ -73,9 +73,9 @@ make conf
 
 * Step 7: Create stream and table for hotels stats in ksqldb Confluent UI
 
-![Step 7:](screenshots/create_expedia/.png)
+![Step 7:](screenshots/create_expedia.png)
 
-![Step 7:](screenshots/create_hotels/.png)
+![Step 7:](screenshots/create_hotels.png)
 
 * Step 8: Download confluent-6.1.0, forward connection from pod ksqldb-0 to local port 8088, run ./ksql http://localhost:8088 and visualized data in Kafka topic
 
